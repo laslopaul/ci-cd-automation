@@ -6,7 +6,7 @@ Param(
 
 $account = Import-AzContext -Path az-profile.json
 $SubscriptionID = $account.Context.Subscription.SubscriptionId
-Set-AzContext -SubscriptionId $SubscriptionID
+Set-AzContext -SubscriptionId $SubscriptionID | Out-Null
 
 Write-Host "Listing resource groups:"
 $rgs = Get-AzResourceGroup
