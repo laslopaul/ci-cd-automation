@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aks-agent-deployment
+  namespace: default
+  labels:
+    app: aks-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aks-agent
+  template:
+    metadata:
+      labels:
+        app: aks-agent
+    spec:
+      containers:
+        - name: aks-agent
+          image: laslopaul/aks-agent:latest
+          env:
+            - name: AZP_URL
+              valueFrom:
+                secretKeyRef:
+                  name: azdevops
+                  key: AZP_URL
+            - name: AZP_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: azdevops
+                  key: AZP_TOKEN
+            - name: AZP_POOL
+              valueFrom:
+                secretKeyRef:
+                  name: azdevops
+                  key: AZP_POOL
