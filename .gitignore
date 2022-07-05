@@ -1,3 +1,7 @@
 az-profile.json
 self-hosted-agent/PAT
 self-hosted-agent/secret.yaml
+dotnet-pipeline/infrastructure/.terraform.lock.hcl
+dotnet-pipeline/infrastructure/terraform.tfstate
+dotnet-pipeline/infrastructure/.terraform/
+dotnet-pipeline/infrastructure/terraform.tfstate.backup
