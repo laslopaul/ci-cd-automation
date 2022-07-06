@@ -43,3 +43,30 @@ resource "azurerm_app_service" "dotnetapp_service" {
   resource_group_name = azurerm_resource_group.dotnetapp.name
   app_service_plan_id = azurerm_app_service_plan.dotnetapp.id
 }
+
+# Create Azure SQL Server and database
+resource "azurerm_sql_server" "sqlserver" {
+  name                         = var.sql_server_name
+  resource_group_name          = azurerm_resource_group.dotnetapp.name
+  location                     = azurerm_resource_group.dotnetapp.location
+  version                      = "12.0"
+  administrator_login          = var.sql_login
+  administrator_login_password = var.sql_password
+}
+
+resource "azurerm_storage_account" "sqlstorage" {
+  name                     = var.storage_account_name
+  resource_group_name      = azurerm_resource_group.dotnetapp.name
+  location                 = azurerm_resource_group.dotnetapp.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+resource "azurerm_sql_database" "sqldb" {
+  name                             = var.db_name
+  resource_group_name              = azurerm_resource_group.dotnetapp.name
+  location                         = azurerm_resource_group.dotnetapp.location
+  server_name                      = azurerm_sql_server.sqlserver.name
+  edition                          = "Basic"
+  requested_service_objective_name = "S0"
+}
