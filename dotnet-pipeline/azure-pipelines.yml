@@ -12,3 +12,4 @@ stages:
     parameters:
       ConnectionName: AzureConnection
       WebsiteName: http://laslopaul-dotnetapp.azurewebsites.net
+      AppName: laslopaul-dotnetapp
