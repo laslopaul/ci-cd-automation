@@ -51,3 +51,8 @@ spec:
                 secretKeyRef:
                   name: azdevops
                   key: ARM_TENANT_ID
+            - name: ARM_SUBSCRIPTION_ID
+              valueFrom:
+                secretKeyRef:
+                  name: azdevops
+                  key: ARM_SUBSCRIPTION_ID
