@@ -1,0 +1,44 @@
+parameters:
+  - name: ConnectionName
+    displayName: AzureRM Service Connection Name
+    type: string
+  - name: WebsiteName
+    displayName: Azure App Service Website
+    type: string
+  - name: AppName
+    displayName: Azure Web App Name
+    type: string
+
+stages:
+  - stage: Deploy
+    jobs:
+      - job: Deploy
+        steps:
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              buildType: "current"
+              artifactName: "drop"
+              targetPath: "$(System.ArtifactsDirectory)"
+
+          - task: AzureRmWebAppDeployment@4
+            inputs:
+              ConnectionType: "AzureRM"
+              azureSubscription: "${{parameters.ConnectionName}}"
+              appType: "webApp"
+              WebAppName: "${{parameters.WebsiteName}}"
+              packageForLinux: "$(Build.ArtifactStagingDirectory)/**/*.zip"
+
+          - task: AzureAppServiceSettings@1
+            displayName: Azure App Service Settings
+            inputs:
+              azureSubscription: "${{parameters.ConnectionName}}"
+              appName: "${{parameters.AppName}}"
+              connectionStrings: |
+                [
+                  {
+                    "name": "SqlCredentials",
+                    "value": "$(ConnString)",
+                    "type": "MySql",
+                    "slotSetting": false
+                  }
+                ]
