@@ -5,3 +5,4 @@ dotnet-pipeline/infrastructure/.terraform.lock.hcl
 dotnet-pipeline/infrastructure/terraform.tfstate
 dotnet-pipeline/infrastructure/.terraform/
 dotnet-pipeline/infrastructure/terraform.tfstate.backup
+.vscode/
