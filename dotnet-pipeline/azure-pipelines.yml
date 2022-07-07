@@ -1,0 +1,14 @@
+trigger:
+  - master
+
+pool: My-AKS-Pool
+
+stages:
+  - template: pipeline-templates/00-provision.yaml
+    parameters:
+      workdir: /dotnet-pipeline/infrastructure
+  - template: pipeline-templates/01-build.yaml
+  - template: pipeline-templates/02-deploy.yaml
+    parameters:
+      ConnectionName: AzureConnection
+      WebsiteName: http://laslopaul-dotnetapp.azurewebsites.net
