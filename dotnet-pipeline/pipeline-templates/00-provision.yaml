@@ -1,0 +1,14 @@
+parameters:
+  - name: WorkDir
+    displayName: Working Directory
+    type: string
+
+stages:
+  - stage: Provision infrastructure
+    jobs:
+      - job: InitApply
+        steps:
+          - script: |
+              terraform init \
+              && terraform apply -var 'sql_login=$(DbLogin)' -var 'sql_password=$(DbPasswd)'
+            workingDirectory: "${{parameters.WorkDir}}"
