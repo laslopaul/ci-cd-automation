@@ -8,6 +8,8 @@ stages:
     parameters:
       workdir: dotnet-pipeline/infrastructure
   - template: pipeline-templates/01-build.yaml
+    parameters:
+      workdir: dotnet-pipeline/app
   - template: pipeline-templates/02-deploy.yaml
     parameters:
       ConnectionName: AzureConnection

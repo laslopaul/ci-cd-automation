@@ -1,3 +1,8 @@
+parameters:
+  - name: WorkDir
+    displayName: Working Directory
+    type: string
+
 stages:
   - stage: Build
     jobs:
@@ -7,7 +12,8 @@ stages:
             displayName: "dotnet build"
             inputs:
               command: "build"
-              solution: "**/*.sln"
+              solution: "*.sln"
+              workingDirectory: "${{parameters.WorkDir}}"
 
           - task: DotNetCoreCLI@2
             inputs:
