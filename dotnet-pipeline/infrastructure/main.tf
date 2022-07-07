@@ -67,6 +67,5 @@ resource "azurerm_sql_database" "sqldb" {
   resource_group_name              = azurerm_resource_group.dotnetapp.name
   location                         = azurerm_resource_group.dotnetapp.location
   server_name                      = azurerm_sql_server.sqlserver.name
-  edition                          = "Basic"
   requested_service_objective_name = "S0"
 }
