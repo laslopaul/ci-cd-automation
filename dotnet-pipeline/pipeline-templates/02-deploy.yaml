@@ -29,6 +29,11 @@ stages:
               packageForLinux: "$(Build.ArtifactStagingDirectory)/**/*.zip"
 
           - script: |
+              az login --service-principal \
+              -u $ARM_CLIENT_ID -p $ARM_CLIENT_SECRET --tenant $ARM_TENANT_ID
+            displayName: az login
+
+          - script: |
               az webapp config connection-string set \
               -g ${{parameters.ResourceGroup}} -n ${{parameters.AppName}} -t sqlazure \
               --settings MyDbConnection='$(ConnString)'
