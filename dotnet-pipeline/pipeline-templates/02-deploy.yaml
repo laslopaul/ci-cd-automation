@@ -33,9 +33,9 @@ stages:
               connectionStrings: |
                 [
                   {
-                    "name": "SqlCredentials",
+                    "name": "MyDbConnection",
                     "value": "$(ConnString)",
-                    "type": "MySql",
+                    "type": "SqlAzure",
                     "slotSetting": false
                   }
                 ]
