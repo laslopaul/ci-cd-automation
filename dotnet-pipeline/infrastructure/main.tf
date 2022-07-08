@@ -54,14 +54,6 @@ resource "azurerm_sql_server" "sqlserver" {
   administrator_login_password = var.sql_password
 }
 
-resource "azurerm_storage_account" "sqlstorage" {
-  name                     = var.storage_account_name
-  resource_group_name      = azurerm_resource_group.dotnetapp.name
-  location                 = azurerm_resource_group.dotnetapp.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-}
-
 resource "azurerm_sql_database" "sqldb" {
   name                             = var.db_name
   resource_group_name              = azurerm_resource_group.dotnetapp.name
