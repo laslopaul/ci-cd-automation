@@ -36,5 +36,7 @@ stages:
           - script: |
               az webapp config connection-string set \
               -g ${{parameters.ResourceGroup}} -n ${{parameters.AppName}} -t sqlazure \
-              --settings MyDbConnection='$(ConnString)'
+              --settings MyDbConnection=$DB_STRING > /dev/null
             displayName: Add SQL connection string
+            env:
+              DB_STRING: $(ConnString)
