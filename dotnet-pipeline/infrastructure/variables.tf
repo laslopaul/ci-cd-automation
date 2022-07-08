@@ -36,9 +36,9 @@ variable "sql_password" {
   sensitive = true
 }
 
-variable "storage_account_name" {
-  default     = "sqlstoragelaslopaul"
-  description = "Name of storage account for SQL database"
+variable "sql_fw_rule_name" {
+  default     = "AllowAzure"
+  description = "Name of firewall rule for SQL server"
 }
 
 variable "db_name" {

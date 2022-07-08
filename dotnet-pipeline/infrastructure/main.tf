@@ -54,6 +54,14 @@ resource "azurerm_sql_server" "sqlserver" {
   administrator_login_password = var.sql_password
 }
 
+resource "azurerm_sql_firewall_rule" "allow_azure" {
+  name                = var.sql_fw_rule_name
+  resource_group_name = azurerm_resource_group.dotnetapp.name
+  server_name         = azurerm_sql_server.sqlserver.name
+  start_ip_address    = "0.0.0.0"
+  end_ip_address      = "0.0.0.0"
+}
+
 resource "azurerm_sql_database" "sqldb" {
   name                             = var.db_name
   resource_group_name              = azurerm_resource_group.dotnetapp.name
