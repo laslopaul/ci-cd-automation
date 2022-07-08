@@ -14,3 +14,4 @@ stages:
     parameters:
       ConnectionName: AzureConnection
       AppName: laslopaul-dotnetapp
+      ResourceGroup: dotnetapp

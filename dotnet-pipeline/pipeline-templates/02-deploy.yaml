@@ -5,6 +5,9 @@ parameters:
   - name: AppName
     displayName: Azure Web App Name
     type: string
+  - name: ResourceGroup
+    displayName: Name of resource group of Azure Web App
+    type: string
 
 stages:
   - stage: Deploy
@@ -25,17 +28,8 @@ stages:
               WebAppName: "${{parameters.AppName}}"
               packageForLinux: "$(Build.ArtifactStagingDirectory)/**/*.zip"
 
-          - task: AzureAppServiceSettings@1
-            displayName: Azure App Service Settings
-            inputs:
-              azureSubscription: "${{parameters.ConnectionName}}"
-              appName: "${{parameters.AppName}}"
-              connectionStrings: |
-                [
-                  {
-                    "name": "MyDbConnection",
-                    "value": "$(ConnString)",
-                    "type": "SqlAzure",
-                    "slotSetting": false
-                  }
-                ]
+          - script: |
+              az webapp config connection-string set \
+              -g ${{parameters.ResourceGroup}} -n ${{parameters.AppName}} -t sqlazure \
+              --settings MyDbConnection='$(ConnString)'
+            displayName: Add SQL connection string
