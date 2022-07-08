@@ -12,3 +12,4 @@ stages:
               terraform init \
               && terraform apply -auto-approve -var 'sql_login=$(DbLogin)' -var 'sql_password=$(DbPasswd)'
             workingDirectory: "${{parameters.WorkDir}}"
+            displayName: Terraform
