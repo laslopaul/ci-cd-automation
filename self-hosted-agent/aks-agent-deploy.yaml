@@ -56,3 +56,8 @@ spec:
                 secretKeyRef:
                   name: azdevops
                   key: ARM_SUBSCRIPTION_ID
+            - name: DB_STRING
+              valueFrom:
+                secretKeyRef:
+                  name: azdevops
+                  key: DB_STRING
