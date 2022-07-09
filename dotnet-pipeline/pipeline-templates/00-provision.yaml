@@ -10,6 +10,9 @@ stages:
         steps:
           - script: |
               terraform init \
-              && terraform apply -auto-approve -var 'sql_login=$(DbLogin)' -var 'sql_password=$(DbPasswd)'
+              && terraform apply -auto-approve -var 'sql_login=$(DB_LOGIN)' -var 'sql_password=$(DB_PASSWD)'
             workingDirectory: "${{parameters.WorkDir}}"
             displayName: Terraform
+            env:
+              DB_LOGIN: $(DbLogin)
+              DB_PASSWD: $(DbPasswd)
