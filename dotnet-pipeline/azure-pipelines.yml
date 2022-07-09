@@ -3,6 +3,9 @@ trigger:
 
 pool: My-AKS-Pool
 
+variables:
+  - group: VarGroup
+
 stages:
   - template: pipeline-templates/00-provision.yaml
     parameters:
