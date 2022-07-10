@@ -2,6 +2,9 @@ parameters:
   - name: EnvironmentName
     displayName: Azure Pipelines environment for k8s
     type: string
+  - name: ResName
+    displayName: Resource name in k8s environment
+    type: string
   - name: ImageRepository
     displayName: Docker Image Respository
     type: string
@@ -11,6 +14,9 @@ parameters:
   - name: ServiceConnection
     displayName: Name of Docker Registry Service Connection
     type: string
+  - name: ManifestPath
+    displayName: Path to k8s app manifest
+    type: string
 
 stages:
   - stage: Deploy
@@ -19,23 +25,17 @@ stages:
     jobs:
       - deployment: Deploy
         displayName: Deploy job
-        environment: "${{parameters.EnvironmentName}}"
+        environment: "${{parameters.EnvironmentName}}.${{parameters.ResName}}"
         strategy:
           runOnce:
             deploy:
               steps:
-                - task: DownloadPipelineArtifact@2
-                  inputs:
-                    artifactName: "manifests"
-                    downloadPath: "$(System.ArtifactsDirectory)/manifests"
-
                 - task: KubernetesManifest@0
                   displayName: Deploy to Kubernetes cluster
                   inputs:
                     action: deploy
                     namespace: "${{parameters.K8sNamespace}}"
                     manifests: |
-                      $(System.ArtifactsDirectory)/manifests/deployment.yml
-                      $(System.ArtifactsDirectory)/manifests/service.yml
+                      ${{parameters.ManifestPath}}
                     containers: |
                       ${{parameters.ServiceConnection}}/${{parameters.ImageRepository}}:latest
