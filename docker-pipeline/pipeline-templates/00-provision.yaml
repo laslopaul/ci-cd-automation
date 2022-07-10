@@ -1,0 +1,14 @@
+parameters:
+  - name: WorkDir
+    displayName: Working Directory
+    type: string
+
+stages:
+  - stage: Provision
+    jobs:
+      - job: PowerShell
+        steps:
+          - script: |
+              pwsh infrastructure.ps1 -Mode create
+            workingDirectory: "${{parameters.WorkDir}}"
+            displayName: Provision infrastructure with PowerShell
