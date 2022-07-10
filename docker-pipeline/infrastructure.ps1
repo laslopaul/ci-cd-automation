@@ -10,17 +10,13 @@ Param(
     $NodeCount = 1
 )
 
-$account = Import-AzContext -Path az-profile.json
-$SubscriptionID = $account.Context.Subscription.SubscriptionId
-Set-AzContext -SubscriptionId $SubscriptionID | Out-Null
-
 if ($Mode -eq "create") {
     New-AzResourceGroup -Name $RgName -Location $Location
 
     New-AzAksCluster `
-        -ResourceGroupName $RgName -Name $ClusterName -NodeVmType $NodeSize -NodeCount $NodeCount -GenerateSshKey
+        -ResourceGroupName $RgName -Name $ClusterName -NodeVmSize $NodeSize -NodeCount $NodeCount -GenerateSshKey
     
-    Import-AzAksCredential -ResourceGroupName $RgName -Name $ClusterName
+    Import-AzAksCredential -ResourceGroupName $RgName -Name $ClusterName -Force
 }
 
 else {
