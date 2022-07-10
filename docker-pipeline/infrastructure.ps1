@@ -5,7 +5,7 @@ Param(
 
     $RgName = "dockerjsapp", 
     $Location = "eastus",
-    $ClusterName = "$(RgName)-cluster",
+    $ClusterName = "dockerjsapp-cluster",
     $NodeSize = "Standard_B2s",
     $NodeCount = 1
 )
