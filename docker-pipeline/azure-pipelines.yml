@@ -10,7 +10,7 @@ stages:
   - template: pipeline-templates/01-build.yaml
     parameters:
       ImageRepository: laslopaul/dockerjsapp
-      DockerfilePath: docker-pipeline/app
+      DockerfilePath: docker-pipeline/app/Dockerfile
       ServiceConnection: DockerHub
   - template: pipeline-templates/02-deploy.yaml
     parameters:
