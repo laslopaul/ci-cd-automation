@@ -1,0 +1,32 @@
+parameters:
+  - name: ImageRepository
+    displayName: Docker Image Respository
+    type: string
+  - name: DockerfilePath
+    displayName: Path to Dockerfile
+    type: string
+  - name: ServiceConnection
+    displayName: Name of Docker Registry Service Connection
+    type: string
+
+stages:
+  - stage: Build
+    displayName: Build stage
+    jobs:
+      - job: Build
+        displayName: Build job
+        steps:
+          - task: Docker@2
+            displayName: Build and push an image to container registry
+            inputs:
+              command: buildAndPush
+              repository: "${{parameters.ImageRepository}}"
+              dockerfile: "${{parameters.DockerfilePath}}"
+              containerRegistry: "${{parameters.ServiceConnection}}"
+              tags: |
+                $(Build.BuildId)
+
+          - task: PublishPipelineArtifact@1
+            inputs:
+              artifactName: "manifests"
+              path: "manifests"
