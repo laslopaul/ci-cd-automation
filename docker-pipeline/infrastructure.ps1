@@ -11,14 +11,15 @@ Param(
 )
 
 if ($Mode -eq "create") {
-    New-AzResourceGroup -Name $RgName -Location $Location
+    New-AzResourceGroup -Name $RgName -Location $Location -ErrorAction Stop
 
     New-AzAksCluster `
-        -ResourceGroupName $RgName -Name $ClusterName -NodeVmSize $NodeSize -NodeCount $NodeCount -GenerateSshKey
+        -ResourceGroupName $RgName -Name $ClusterName -NodeVmSize $NodeSize -NodeCount $NodeCount `
+        -ErrorAction Stop
     
-    Import-AzAksCredential -ResourceGroupName $RgName -Name $ClusterName -Force
+    Import-AzAksCredential -ResourceGroupName $RgName -Name $ClusterName -Force -ErrorAction Stop
 }
 
 else {
-    Remove-AzResourceGroup -Name $RgName -Force
+    Remove-AzResourceGroup -Name $RgName -Force -ErrorAction Stop
 }
