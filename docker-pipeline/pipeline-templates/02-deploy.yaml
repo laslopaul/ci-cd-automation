@@ -38,4 +38,4 @@ stages:
                       $(System.ArtifactsDirectory)/manifests/deployment.yml
                       $(System.ArtifactsDirectory)/manifests/service.yml
                     containers: |
-                      ${{parameters.ServiceConnection}}/${{parameters.ImageRepository}}:$(Build.BuildId)
+                      ${{parameters.ServiceConnection}}/${{parameters.ImageRepository}}:latest

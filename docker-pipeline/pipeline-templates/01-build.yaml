@@ -25,6 +25,7 @@ stages:
               containerRegistry: "${{parameters.ServiceConnection}}"
               tags: |
                 $(Build.BuildId)
+                latest
 
           - task: PublishPipelineArtifact@1
             inputs:
