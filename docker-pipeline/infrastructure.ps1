@@ -10,7 +10,14 @@ Param(
     $NodeCount = 1
 )
 
-if ($Mode -eq "create") {
+$ClusterExists = Get-AzResource -Name $ClusterName -ResourceGroupName $RgName
+
+if ($Mode -eq "create" -and $null -ne $ClusterExists) {
+    Write-Host "Cluster '$ClusterName' already exists in resource group '$RgName'"
+    Exit
+}
+
+elseif ($Mode -eq "create" -and $null -eq $ClusterExists) {
     New-AzResourceGroup -Name $RgName -Location $Location -ErrorAction Stop
 
     New-AzAksCluster `
@@ -20,6 +27,6 @@ if ($Mode -eq "create") {
     Import-AzAksCredential -ResourceGroupName $RgName -Name $ClusterName -Force -ErrorAction Stop
 }
 
-else {
-    Remove-AzResourceGroup -Name $RgName -Force -ErrorAction Stop
+elseif ($Mode -eq "destroy" -and $null -ne $ClusterExists) {
+    Remove-AzResourceGroup -Name $RgName -Confirm -ErrorAction Stop
 }
