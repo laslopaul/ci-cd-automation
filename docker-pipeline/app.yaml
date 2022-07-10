@@ -1,0 +1,33 @@
+# Kubernetes manifest for application deployment & service
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dockerjsapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dockerjsapp
+  template:
+    metadata:
+      labels:
+        app: dockerjsapp
+    spec:
+      containers:
+        - name: dockerjsapp
+          image: laslopaul/dockerjsapp
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dockerjsapp
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+  selector:
+    app: dockerjsapp
