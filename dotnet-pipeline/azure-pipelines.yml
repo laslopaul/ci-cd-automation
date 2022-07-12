@@ -9,6 +9,8 @@ variables:
 stages:
   - template: pipeline-templates/00-provision.yaml
     parameters:
+      dblogin: $(DbLogin)
+      dbpasswd: $(DbPasswd)
       workdir: dotnet-pipeline/infrastructure
   - template: pipeline-templates/01-build.yaml
     parameters:
@@ -18,3 +20,4 @@ stages:
       ConnectionName: AzureConnection
       AppName: laslopaul-dotnetapp
       ResourceGroup: dotnetapp
+      ConnString: $(ConnString)

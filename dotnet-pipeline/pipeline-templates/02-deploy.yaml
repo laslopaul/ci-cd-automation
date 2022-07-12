@@ -8,6 +8,9 @@ parameters:
   - name: ResourceGroup
     displayName: Name of resource group of Azure Web App
     type: string
+  - name: ConnString
+    displayName: Database connection string
+    type: string
 
 stages:
   - stage: Deploy
@@ -36,7 +39,7 @@ stages:
           - script: |
               az webapp config connection-string set \
               -g ${{parameters.ResourceGroup}} -n ${{parameters.AppName}} -t sqlazure \
-              --settings MyDbConnection='$(DB_STRING)' > /dev/null
+              --settings MyDbConnection="${{parameters.ConnString}}" > /dev/null
             displayName: Add SQL connection string
             env:
               DB_STRING: $(ConnString)

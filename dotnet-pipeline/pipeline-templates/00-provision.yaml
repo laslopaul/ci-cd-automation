@@ -1,4 +1,10 @@
 parameters:
+  - name: dblogin
+    displayName: Login for Azure SQL server
+    type: string
+  - name: dbpasswd
+    displayName: Password for Azure SQL server
+    type: string
   - name: WorkDir
     displayName: Working Directory
     type: string
@@ -10,7 +16,8 @@ stages:
         steps:
           - script: |
               terraform init \
-              && terraform apply -auto-approve -var 'sql_login=$(DB_LOGIN)' -var 'sql_password=$(DB_PASSWD)'
+              && terraform apply -auto-approve \
+              -var 'sql_login=${{parameters.dblogin}}' -var 'sql_password=${{parameters.dbpasswd}}'
             workingDirectory: "${{parameters.WorkDir}}"
             displayName: Terraform
             env:
