@@ -2,12 +2,25 @@ parameters:
   - name: WorkDir
     displayName: Working Directory
     type: string
+  - name: ConnString
+    displayName: Database connection string
+    type: string
 
 stages:
   - stage: Build
     jobs:
       - job: Build
         steps:
+          - script: |
+              sed -i "s/Server=.*/${{parameters.ConnString}}\"/" appsettings.json
+              dotnet tool install -g dotnet-ef
+              export PATH="$PATH:$HOME/.dotnet/tools" >> ~/.bashrc
+              source ~/.bashrc
+              dotnet ef migrations add InitialCreate
+              dotnet ef database update
+            displayName: Perform database migrations
+            workingDirectory: "${{parameters.WorkDir}}/DotNetCoreSqlDb"
+
           - task: DotNetCoreCLI@2
             displayName: "dotnet build"
             inputs:
