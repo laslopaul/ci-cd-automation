@@ -20,6 +20,3 @@ stages:
               -var 'sql_login=${{parameters.dblogin}}' -var 'sql_password=${{parameters.dbpasswd}}'
             workingDirectory: "${{parameters.WorkDir}}"
             displayName: Terraform
-            env:
-              DB_LOGIN: $(DbLogin)
-              DB_PASSWD: $(DbPasswd)

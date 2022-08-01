@@ -21,7 +21,7 @@ stages:
             inputs:
               buildType: "current"
               artifactName: "drop"
-              targetPath: "$(System.ArtifactsDirectory)"
+              targetPath: "$(Build.ArtifactStagingDirectory)"
 
           - task: AzureRmWebAppDeployment@4
             inputs:
@@ -41,5 +41,3 @@ stages:
               -g ${{parameters.ResourceGroup}} -n ${{parameters.AppName}} -t sqlazure \
               --settings MyDbConnection="${{parameters.ConnString}}" > /dev/null
             displayName: Add SQL connection string
-            env:
-              DB_STRING: $(ConnString)
